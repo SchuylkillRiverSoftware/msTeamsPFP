@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('fonts/Segoe UI/seguisb.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+.logo {
+  position: relative;
+  width: 111px;
+  height: 111px;
+}
+
+.circle {
+  position: absolute;
+  inset: 0;
+  background: #F8EACD;
+  border-radius: 50%;
+}
+
+.letter {
+  position: absolute;
+  font-family: "MyCustomFont", sans-serif;
+  font-size: 45px;
+  font-weight: 600;
+  color: #775717;
+  line-height: 1;
+  display: block;
+}
+
+.letter.j {
+  left: 29px;
+  top: 32px;
+}
+
+.letter.g {
+  left: 51px; 
+  top: 32px;
+}
