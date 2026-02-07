@@ -10,10 +10,29 @@
         <span class="letter g">A</span>
     </div>
 
-    <form action="/submit-page" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <button type="submit">Submit</button>
+    <form id="initials-form">
+        <label for="initials">Initials:</label>
+        <input type="text" id="initials" name="initials">
+        <button type="submit">Refresh</button>
     </form>
 </body>
+
+<script>
+    const form = document.querySelector("#initials-form");
+    const letterJ = document.querySelector(".letter.j");
+    const letterG = document.querySelector(".letter.g");
+
+    form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const value = form.elements["initials"].value.trim().toUpperCase();
+
+    if (value.length >= 2) {
+        letterJ.textContent = value[0];
+        letterG.textContent = value[1];
+    }
+        const input = form.elements["initials"];
+        console.log(input.value);
+    });
+</script>
 </html>
