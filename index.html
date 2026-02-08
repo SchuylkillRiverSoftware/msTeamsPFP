@@ -9,30 +9,46 @@
         <span class="letter j">T</span>
         <span class="letter g">A</span>
     </div>
-
     <form id="initials-form">
         <label for="initials">Initials:</label>
         <input type="text" id="initials" name="initials">
         <button type="submit">Refresh</button>
     </form>
 </body>
-
 <script>
     const form = document.querySelector("#initials-form");
     const letterJ = document.querySelector(".letter.j");
     const letterG = document.querySelector(".letter.g");
 
-    form.addEventListener("submit", function (event) {
-    event.preventDefault();
+    function centerLetters() {
+        const circleWidth = 111;
+        const centerX = circleWidth / 2;
+        const gap = 2;
 
-    const value = form.elements["initials"].value.trim().toUpperCase();
+        letterJ.style.left = '0px';
+        letterG.style.left = '0px';
 
-    if (value.length >= 2) {
-        letterJ.textContent = value[0];
-        letterG.textContent = value[1];
+        requestAnimationFrame(() => {
+            const jWidth = letterJ.getBoundingClientRect().width;
+            const gWidth = letterG.getBoundingClientRect().width;
+            const totalWidth = jWidth + gap + gWidth;
+            const startX = centerX - totalWidth / 2;
+
+            letterJ.style.left = `${startX}px`;
+            letterG.style.left = `${startX + jWidth + gap}px`;
+        });
     }
-        const input = form.elements["initials"];
-        console.log(input.value);
+
+    centerLetters();
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const value = form.elements["initials"].value.trim().toUpperCase();
+        if (value.length >= 2) {
+            letterJ.textContent = value[0];
+            letterG.textContent = value[1];
+            centerLetters();
+        }
     });
 </script>
 </html>
