@@ -3,7 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS Teams PFP Gen</title>
+
+    <title>Microsoft Teams Profile Picture Generator — Create Custom Initials Avatars</title>
+    <meta name="description" content="Free online tool to generate Microsoft Teams-style initials profile pictures. Choose from preset color themes or create custom colors. Download high-resolution PNG avatars instantly.">
+    <meta name="keywords" content="Microsoft Teams profile picture, Teams avatar generator, initials profile picture, Teams PFP maker, custom Teams avatar, monogram generator, Teams default profile picture, initials logo creator">
+    <meta name="author" content="MS Teams PFP Generator">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Microsoft Teams Profile Picture Generator — Custom Initials Avatars">
+    <meta property="og:description" content="Generate professional Microsoft Teams-style initials profile pictures. Pick preset themes or design custom colors. Free, instant PNG download.">
+    <meta property="og:site_name" content="Teams Profile Picture Generator">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Microsoft Teams Profile Picture Generator — Custom Initials Avatars">
+    <meta name="twitter:description" content="Generate professional Microsoft Teams-style initials profile pictures. Pick preset themes or design custom colors. Free, instant PNG download.">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Microsoft Teams Profile Picture Generator",
+        "description": "Free online tool to create Microsoft Teams-style initials profile pictures with custom colors and preset themes. Download high-resolution PNG avatars instantly.",
+        "url": "",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Custom initials input",
+            "Preset color themes",
+            "Custom color picker",
+            "High-resolution PNG export",
+            "Microsoft Teams style avatars"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I create a Microsoft Teams profile picture with my initials?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Enter your two initials in the input field and click Generate. Choose from five preset color themes or create a custom color combination, then click Download to save your profile picture as a high-resolution PNG."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What size is the downloaded Teams profile picture?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The profile picture downloads as a 444x444 pixel PNG image with a transparent-free circular design, optimized for Microsoft Teams and other platforms."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I customize the colors of my Teams avatar?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. You can choose from five preset themes (Warm Gold, Ocean Blue, Plum Berry, Forest Green, and Dark Luxe) or use the custom color pickers to set any circle background and letter color you want."
+                }
+            }
+        ]
+    }
+    </script>
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -26,19 +99,20 @@
     <div class="page">
         <header class="header">
             <h1 class="title">Microsoft Teams Profile <span class="title-accent">Picture Generator</span></h1>
-            <p class="subtitle">Create your personalized initials logo</p>
+            <p class="subtitle">Create a custom initials avatar for Microsoft Teams — choose a preset theme or design your own</p>
         </header>
 
-        <div class="input-section">
+        <main>
+        <div class="input-section" role="form" aria-label="Enter your initials">
             <form id="initials-form" class="initials-form">
-                <input type="text" id="initials" name="initials" maxlength="2" placeholder="Enter 2 initials" autocomplete="off">
+                <input type="text" id="initials" name="initials" maxlength="2" placeholder="Enter 2 initials" autocomplete="off" aria-label="Your two initials">
                 <button type="submit" class="btn btn-primary">Generate</button>
             </form>
         </div>
 
-        <section class="section">
+        <section class="section" aria-label="Preset color themes">
             <h2 class="section-title">Preset Themes</h2>
-            <p class="section-desc">Click a theme to preview, then download it</p>
+            <p class="section-desc">Choose a ready-made color scheme and download your Teams profile picture</p>
             <div class="presets-grid">
                 <div class="preset-card" data-bg="#F8EACD" data-text="#775717">
                     <div class="preset-logo-wrap">
@@ -80,22 +154,22 @@
                     <span class="preset-label">Forest Green</span>
                     <button class="btn btn-small btn-download preset-download">Download</button>
                 </div>
-                <div class="preset-card" data-bg="#2C2C2C" data-text="#E8C872">
+                <div class="preset-card" data-bg="#ffccd3" data-text="#4d0218">
                     <div class="preset-logo-wrap">
                         <div class="preset-logo">
-                            <div class="preset-circle" style="background:#2C2C2C;"></div>
-                            <span class="preset-pair" style="color:#E8C872;">TA</span>
+                            <div class="preset-circle" style="background:#ffccd3;"></div>
+                            <span class="preset-pair" style="color:#4d0218;">TA</span>
                         </div>
                     </div>
-                    <span class="preset-label">Dark Luxe</span>
+                    <span class="preset-label">Cherry Rose</span>
                     <button class="btn btn-small btn-download preset-download">Download</button>
                 </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" aria-label="Custom color designer">
             <h2 class="section-title">Custom Colors</h2>
-            <p class="section-desc">Design your own color scheme</p>
+            <p class="section-desc">Design your own color scheme for a unique Teams avatar</p>
             <div class="custom-area">
                 <div class="custom-preview">
                     <div class="logo" id="custom-logo">
@@ -122,6 +196,33 @@
                 </div>
             </div>
         </section>
+
+        <section class="section faq-section" aria-label="Frequently asked questions">
+            <h2 class="section-title">FAQ</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary class="faq-question">How do I create a Microsoft Teams profile picture?</summary>
+                    <p class="faq-answer">Type your two initials into the input field at the top of the page and click Generate. Your initials will appear across all preset themes and the custom color designer. Pick a style you like and hit Download to save a high-resolution PNG ready to upload to Microsoft Teams.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">What size is the downloaded profile picture?</summary>
+                    <p class="faq-answer">Every download is a 444×444 pixel PNG — sharp enough for Microsoft Teams, Outlook, Slack, Zoom, and any other platform that uses profile avatars.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Can I use custom colors for my Teams avatar?</summary>
+                    <p class="faq-answer">Absolutely. Scroll to the Custom Colors section, pick any background circle color and letter color using the color pickers, then download your one-of-a-kind initials avatar.</p>
+                </details>
+                <details class="faq-item">
+                    <summary class="faq-question">Is this tool free?</summary>
+                    <p class="faq-answer">Yes — completely free with no sign-up required. Your initials are generated entirely in your browser and nothing is uploaded to any server.</p>
+                </details>
+            </div>
+        </section>
+        </main>
+
+        <footer class="footer">
+            <p>Free Microsoft Teams profile picture generator. No sign-up, no upload — everything runs in your browser.</p>
+        </footer>
     </div>
 
     <script>
