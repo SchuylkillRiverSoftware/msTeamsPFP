@@ -5,9 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MS Teams PFP Gen</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
     <div class="page">
         <header class="header">
             <h1 class="title">Microsoft Teams Profile <span class="title-accent">Picture Generator</span></h1>
@@ -29,8 +44,7 @@
                     <div class="preset-logo-wrap">
                         <div class="preset-logo">
                             <div class="preset-circle" style="background:#F8EACD;"></div>
-                            <span class="preset-letter preset-j" style="color:#775717;">T</span>
-                            <span class="preset-letter preset-g" style="color:#775717;">A</span>
+                            <span class="preset-pair" style="color:#775717;">TA</span>
                         </div>
                     </div>
                     <span class="preset-label">Warm Gold</span>
@@ -40,8 +54,7 @@
                     <div class="preset-logo-wrap">
                         <div class="preset-logo">
                             <div class="preset-circle" style="background:#D4E8F0;"></div>
-                            <span class="preset-letter preset-j" style="color:#1A5276;">T</span>
-                            <span class="preset-letter preset-g" style="color:#1A5276;">A</span>
+                            <span class="preset-pair" style="color:#1A5276;">TA</span>
                         </div>
                     </div>
                     <span class="preset-label">Ocean Blue</span>
@@ -51,8 +64,7 @@
                     <div class="preset-logo-wrap">
                         <div class="preset-logo">
                             <div class="preset-circle" style="background:#E8D5E0;"></div>
-                            <span class="preset-letter preset-j" style="color:#6B2D5B;">T</span>
-                            <span class="preset-letter preset-g" style="color:#6B2D5B;">A</span>
+                            <span class="preset-pair" style="color:#6B2D5B;">TA</span>
                         </div>
                     </div>
                     <span class="preset-label">Plum Berry</span>
@@ -62,8 +74,7 @@
                     <div class="preset-logo-wrap">
                         <div class="preset-logo">
                             <div class="preset-circle" style="background:#D5E5D0;"></div>
-                            <span class="preset-letter preset-j" style="color:#2D5A27;">T</span>
-                            <span class="preset-letter preset-g" style="color:#2D5A27;">A</span>
+                            <span class="preset-pair" style="color:#2D5A27;">TA</span>
                         </div>
                     </div>
                     <span class="preset-label">Forest Green</span>
@@ -73,8 +84,7 @@
                     <div class="preset-logo-wrap">
                         <div class="preset-logo">
                             <div class="preset-circle" style="background:#2C2C2C;"></div>
-                            <span class="preset-letter preset-j" style="color:#E8C872;">T</span>
-                            <span class="preset-letter preset-g" style="color:#E8C872;">A</span>
+                            <span class="preset-pair" style="color:#E8C872;">TA</span>
                         </div>
                     </div>
                     <span class="preset-label">Dark Luxe</span>
@@ -90,8 +100,7 @@
                 <div class="custom-preview">
                     <div class="logo" id="custom-logo">
                         <div class="circle" id="custom-circle"></div>
-                        <span class="letter j" id="custom-j">T</span>
-                        <span class="letter g" id="custom-g">A</span>
+                        <span class="letter-pair" id="custom-pair">TA</span>
                     </div>
                 </div>
                 <div class="custom-controls">
@@ -119,49 +128,19 @@
         let currentInitials = ['T', 'A'];
 
         const form = document.getElementById('initials-form');
-        const customJ = document.getElementById('custom-j');
-        const customG = document.getElementById('custom-g');
+        const customPair = document.getElementById('custom-pair');
         const customCircle = document.getElementById('custom-circle');
         const circleColorInput = document.getElementById('circle-color');
         const letterColorInput = document.getElementById('letter-color');
         const circleHex = document.getElementById('circle-hex');
         const letterHex = document.getElementById('letter-hex');
 
-        function centerLettersIn(container) {
-            const j = container.querySelector('.preset-j, .letter.j');
-            const g = container.querySelector('.preset-g, .letter.g');
-            if (!j || !g) return;
-
-            const circleWidth = container.offsetWidth || 111;
-            const centerX = circleWidth / 2;
-            const gap = 2;
-
-            j.style.left = '0px';
-            g.style.left = '0px';
-
-            requestAnimationFrame(() => {
-                const jWidth = j.getBoundingClientRect().width;
-                const gWidth = g.getBoundingClientRect().width;
-                const totalWidth = jWidth + gap + gWidth;
-                const startX = centerX - totalWidth / 2;
-                j.style.left = `${startX}px`;
-                g.style.left = `${startX + jWidth + gap}px`;
-            });
-        }
-
-        function centerAllLogos() {
-            centerLettersIn(document.getElementById('custom-logo'));
-            document.querySelectorAll('.preset-logo').forEach(logo => centerLettersIn(logo));
-        }
-
         function updateAllInitials() {
-            customJ.textContent = currentInitials[0];
-            customG.textContent = currentInitials[1];
-            document.querySelectorAll('.preset-card').forEach(card => {
-                card.querySelector('.preset-j').textContent = currentInitials[0];
-                card.querySelector('.preset-g').textContent = currentInitials[1];
+            const text = currentInitials[0] + currentInitials[1];
+            customPair.textContent = text;
+            document.querySelectorAll('.preset-pair').forEach(pair => {
+                pair.textContent = text;
             });
-            centerAllLogos();
         }
 
         form.addEventListener('submit', (e) => {
@@ -181,72 +160,39 @@
 
         letterColorInput.addEventListener('input', () => {
             const c = letterColorInput.value;
-            customJ.style.color = c;
-            customG.style.color = c;
+            customPair.style.color = c;
             letterHex.textContent = c.toUpperCase();
         });
 
         function downloadLogo(bgColor, textColor, filename) {
-            const baseSize = 111;
-            const scale = 4;
+            const size = 444;
+            const fontSize = 180;
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
 
-            const wrapper = document.createElement('div');
-            wrapper.style.cssText = `position:fixed;left:-9999px;top:0;z-index:-1;`;
+            ctx.beginPath();
+            ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+            ctx.fillStyle = bgColor;
+            ctx.fill();
 
-            const logoDiv = document.createElement('div');
-            logoDiv.style.cssText = `position:relative;width:${baseSize}px;height:${baseSize}px;`;
+            ctx.font = `600 ${fontSize}px "MyCustomFont", "Segoe UI", sans-serif`;
+            ctx.fillStyle = textColor;
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
 
-            const circleDiv = document.createElement('div');
-            circleDiv.style.cssText = `position:absolute;inset:0;background:${bgColor};border-radius:50%;`;
+            const text = currentInitials[0] + currentInitials[1];
+            ctx.fillText(text, size / 2, size / 2 + 2);
 
-            const jSpan = document.createElement('span');
-            const gSpan = document.createElement('span');
-            const letterStyle = `position:absolute;font-family:"MyCustomFont","Segoe UI",sans-serif;font-size:45px;font-weight:600;line-height:1;display:block;top:32px;color:${textColor};`;
-            jSpan.style.cssText = letterStyle;
-            gSpan.style.cssText = letterStyle;
-            jSpan.textContent = currentInitials[0];
-            gSpan.textContent = currentInitials[1];
-
-            logoDiv.appendChild(circleDiv);
-            logoDiv.appendChild(jSpan);
-            logoDiv.appendChild(gSpan);
-            wrapper.appendChild(logoDiv);
-            document.body.appendChild(wrapper);
-
-            const gap = 2;
-            jSpan.style.left = '0px';
-            gSpan.style.left = '0px';
-
-            requestAnimationFrame(() => {
-                const jW = jSpan.getBoundingClientRect().width;
-                const gW = gSpan.getBoundingClientRect().width;
-                const totalW = jW + gap + gW;
-                const startX = (baseSize / 2) - totalW / 2;
-                jSpan.style.left = `${startX}px`;
-                gSpan.style.left = `${startX + jW + gap}px`;
-
-                requestAnimationFrame(() => {
-                    html2canvas(logoDiv, {
-                        scale: scale,
-                        backgroundColor: null,
-                        logging: false,
-                        width: baseSize,
-                        height: baseSize,
-                    }).then(canvas => {
-                        document.body.removeChild(wrapper);
-                        canvas.toBlob((blob) => {
-                            const url = URL.createObjectURL(blob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            a.download = filename || 'ms-teams-pfp.png';
-                            a.click();
-                            URL.revokeObjectURL(url);
-                        }, 'image/png');
-                    }).catch(() => {
-                        document.body.removeChild(wrapper);
-                    });
-                });
-            });
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename || 'ms-teams-pfp.png';
+                a.click();
+                URL.revokeObjectURL(url);
+            }, 'image/png');
         }
 
         document.querySelectorAll('.preset-card').forEach(card => {
@@ -264,7 +210,20 @@
             downloadLogo(circleColorInput.value, letterColorInput.value, 'ms-teams-pfp-custom.png');
         });
 
-        centerAllLogos();
+        const toggle = document.getElementById('theme-toggle');
+        const root = document.documentElement;
+
+        function setTheme(mode) {
+            root.setAttribute('data-theme', mode);
+        }
+
+        toggle.addEventListener('click', () => {
+            const current = root.getAttribute('data-theme') || 'dark';
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        setTheme('dark');
+
     </script>
 </body>
 </html>
