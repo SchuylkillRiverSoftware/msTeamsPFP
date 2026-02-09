@@ -198,14 +198,18 @@ body {
   border-radius: 50%;
 }
 
-.preset-letter {
+.preset-pair {
   position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: "MyCustomFont", "Segoe UI", sans-serif;
   font-size: 29px;
   font-weight: 600;
   line-height: 1;
-  display: block;
-  top: 21px;
+  padding-bottom: 3px;
 }
 
 .preset-label {
@@ -252,22 +256,19 @@ body {
   border-radius: 50%;
 }
 
-.letter {
+.letter-pair {
   position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: "MyCustomFont", "Segoe UI", sans-serif;
   font-size: 45px;
   font-weight: 600;
   color: #775717;
   line-height: 1;
-  display: block;
-}
-
-.letter.j {
-  top: 32px;
-}
-
-.letter.g {
-  top: 32px;
+  padding-bottom: 5px;
 }
 
 .custom-controls {
