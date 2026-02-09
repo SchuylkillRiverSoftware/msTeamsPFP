@@ -275,8 +275,6 @@ body::before {
 .preset-card:hover {
   border-color: var(--border-hover);
   background: var(--bg-card-hover);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-card);
 }
 
 .preset-logo-wrap {
