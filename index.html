@@ -1,38 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS Teams PFP Gen</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="logo">
-        <div class="circle"></div>
-        <span class="letter j">T</span>
-        <span class="letter g">A</span>
+    <div class="page">
+        <header class="header">
+            <h1 class="title">Microsoft Teams Profile <span class="title-accent">Picture Generator</span></h1>
+            <p class="subtitle">Create your personalized initials logo</p>
+        </header>
+
+        <div class="input-section">
+            <form id="initials-form" class="initials-form">
+                <input type="text" id="initials" name="initials" maxlength="2" placeholder="Enter 2 initials" autocomplete="off">
+                <button type="submit" class="btn btn-primary">Generate</button>
+            </form>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">Preset Themes</h2>
+            <p class="section-desc">Click a theme to preview, then download it</p>
+            <div class="presets-grid">
+                <div class="preset-card" data-bg="#F8EACD" data-text="#775717">
+                    <div class="preset-logo-wrap">
+                        <div class="preset-logo">
+                            <div class="preset-circle" style="background:#F8EACD;"></div>
+                            <span class="preset-letter preset-j" style="color:#775717;">T</span>
+                            <span class="preset-letter preset-g" style="color:#775717;">A</span>
+                        </div>
+                    </div>
+                    <span class="preset-label">Warm Gold</span>
+                    <button class="btn btn-small btn-download preset-download">Download</button>
+                </div>
+                <div class="preset-card" data-bg="#D4E8F0" data-text="#1A5276">
+                    <div class="preset-logo-wrap">
+                        <div class="preset-logo">
+                            <div class="preset-circle" style="background:#D4E8F0;"></div>
+                            <span class="preset-letter preset-j" style="color:#1A5276;">T</span>
+                            <span class="preset-letter preset-g" style="color:#1A5276;">A</span>
+                        </div>
+                    </div>
+                    <span class="preset-label">Ocean Blue</span>
+                    <button class="btn btn-small btn-download preset-download">Download</button>
+                </div>
+                <div class="preset-card" data-bg="#E8D5E0" data-text="#6B2D5B">
+                    <div class="preset-logo-wrap">
+                        <div class="preset-logo">
+                            <div class="preset-circle" style="background:#E8D5E0;"></div>
+                            <span class="preset-letter preset-j" style="color:#6B2D5B;">T</span>
+                            <span class="preset-letter preset-g" style="color:#6B2D5B;">A</span>
+                        </div>
+                    </div>
+                    <span class="preset-label">Plum Berry</span>
+                    <button class="btn btn-small btn-download preset-download">Download</button>
+                </div>
+                <div class="preset-card" data-bg="#D5E5D0" data-text="#2D5A27">
+                    <div class="preset-logo-wrap">
+                        <div class="preset-logo">
+                            <div class="preset-circle" style="background:#D5E5D0;"></div>
+                            <span class="preset-letter preset-j" style="color:#2D5A27;">T</span>
+                            <span class="preset-letter preset-g" style="color:#2D5A27;">A</span>
+                        </div>
+                    </div>
+                    <span class="preset-label">Forest Green</span>
+                    <button class="btn btn-small btn-download preset-download">Download</button>
+                </div>
+                <div class="preset-card" data-bg="#2C2C2C" data-text="#E8C872">
+                    <div class="preset-logo-wrap">
+                        <div class="preset-logo">
+                            <div class="preset-circle" style="background:#2C2C2C;"></div>
+                            <span class="preset-letter preset-j" style="color:#E8C872;">T</span>
+                            <span class="preset-letter preset-g" style="color:#E8C872;">A</span>
+                        </div>
+                    </div>
+                    <span class="preset-label">Dark Luxe</span>
+                    <button class="btn btn-small btn-download preset-download">Download</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Custom Colors</h2>
+            <p class="section-desc">Design your own color scheme</p>
+            <div class="custom-area">
+                <div class="custom-preview">
+                    <div class="logo" id="custom-logo">
+                        <div class="circle" id="custom-circle"></div>
+                        <span class="letter j" id="custom-j">T</span>
+                        <span class="letter g" id="custom-g">A</span>
+                    </div>
+                </div>
+                <div class="custom-controls">
+                    <div class="color-row">
+                        <label class="color-label" for="circle-color">Circle Color</label>
+                        <div class="color-input-wrap">
+                            <input type="color" id="circle-color" value="#F8EACD" class="color-input">
+                            <span class="color-hex" id="circle-hex">#F8EACD</span>
+                        </div>
+                    </div>
+                    <div class="color-row">
+                        <label class="color-label" for="letter-color">Letter Color</label>
+                        <div class="color-input-wrap">
+                            <input type="color" id="letter-color" value="#775717" class="color-input">
+                            <span class="color-hex" id="letter-hex">#775717</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-download-custom" id="download-custom">Download Custom Logo</button>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <form id="initials-form">
-        <label for="initials">Initials:</label>
-        <input type="text" id="initials" name="initials">
-        <button type="submit">Refresh</button>
-    </form>
+    <script>
+        let currentInitials = ['T', 'A'];
+
+        const form = document.getElementById('initials-form');
+        const customJ = document.getElementById('custom-j');
+        const customG = document.getElementById('custom-g');
+        const customCircle = document.getElementById('custom-circle');
+        const circleColorInput = document.getElementById('circle-color');
+        const letterColorInput = document.getElementById('letter-color');
+        const circleHex = document.getElementById('circle-hex');
+        const letterHex = document.getElementById('letter-hex');
+
+        function centerLettersIn(container) {
+            const j = container.querySelector('.preset-j, .letter.j');
+            const g = container.querySelector('.preset-g, .letter.g');
+            if (!j || !g) return;
+
+            const circleWidth = container.offsetWidth || 111;
+            const centerX = circleWidth / 2;
+            const gap = 2;
+
+            j.style.left = '0px';
+            g.style.left = '0px';
+
+            requestAnimationFrame(() => {
+                const jWidth = j.getBoundingClientRect().width;
+                const gWidth = g.getBoundingClientRect().width;
+                const totalWidth = jWidth + gap + gWidth;
+                const startX = centerX - totalWidth / 2;
+                j.style.left = `${startX}px`;
+                g.style.left = `${startX + jWidth + gap}px`;
+            });
+        }
+
+        function centerAllLogos() {
+            centerLettersIn(document.getElementById('custom-logo'));
+            document.querySelectorAll('.preset-logo').forEach(logo => centerLettersIn(logo));
+        }
+
+        function updateAllInitials() {
+            customJ.textContent = currentInitials[0];
+            customG.textContent = currentInitials[1];
+            document.querySelectorAll('.preset-card').forEach(card => {
+                card.querySelector('.preset-j').textContent = currentInitials[0];
+                card.querySelector('.preset-g').textContent = currentInitials[1];
+            });
+            centerAllLogos();
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const value = form.elements['initials'].value.trim().toUpperCase();
+            if (value.length >= 2) {
+                currentInitials = [value[0], value[1]];
+                updateAllInitials();
+            }
+        });
+
+        circleColorInput.addEventListener('input', () => {
+            const c = circleColorInput.value;
+            customCircle.style.background = c;
+            circleHex.textContent = c.toUpperCase();
+        });
+
+        letterColorInput.addEventListener('input', () => {
+            const c = letterColorInput.value;
+            customJ.style.color = c;
+            customG.style.color = c;
+            letterHex.textContent = c.toUpperCase();
+        });
+
+        function downloadLogo(bgColor, textColor, filename) {
+            const baseSize = 111;
+            const scale = 4;
+
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = `position:fixed;left:-9999px;top:0;z-index:-1;`;
+
+            const logoDiv = document.createElement('div');
+            logoDiv.style.cssText = `position:relative;width:${baseSize}px;height:${baseSize}px;`;
+
+            const circleDiv = document.createElement('div');
+            circleDiv.style.cssText = `position:absolute;inset:0;background:${bgColor};border-radius:50%;`;
+
+            const jSpan = document.createElement('span');
+            const gSpan = document.createElement('span');
+            const letterStyle = `position:absolute;font-family:"MyCustomFont","Segoe UI",sans-serif;font-size:45px;font-weight:600;line-height:1;display:block;top:32px;color:${textColor};`;
+            jSpan.style.cssText = letterStyle;
+            gSpan.style.cssText = letterStyle;
+            jSpan.textContent = currentInitials[0];
+            gSpan.textContent = currentInitials[1];
+
+            logoDiv.appendChild(circleDiv);
+            logoDiv.appendChild(jSpan);
+            logoDiv.appendChild(gSpan);
+            wrapper.appendChild(logoDiv);
+            document.body.appendChild(wrapper);
+
+            const gap = 2;
+            jSpan.style.left = '0px';
+            gSpan.style.left = '0px';
+
+            requestAnimationFrame(() => {
+                const jW = jSpan.getBoundingClientRect().width;
+                const gW = gSpan.getBoundingClientRect().width;
+                const totalW = jW + gap + gW;
+                const startX = (baseSize / 2) - totalW / 2;
+                jSpan.style.left = `${startX}px`;
+                gSpan.style.left = `${startX + jW + gap}px`;
+
+                requestAnimationFrame(() => {
+                    html2canvas(logoDiv, {
+                        scale: scale,
+                        backgroundColor: null,
+                        logging: false,
+                        width: baseSize,
+                        height: baseSize,
+                    }).then(canvas => {
+                        document.body.removeChild(wrapper);
+                        canvas.toBlob((blob) => {
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = filename || 'ms-teams-pfp.png';
+                            a.click();
+                            URL.revokeObjectURL(url);
+                        }, 'image/png');
+                    }).catch(() => {
+                        document.body.removeChild(wrapper);
+                    });
+                });
+            });
+        }
+
+        document.querySelectorAll('.preset-card').forEach(card => {
+            const btn = card.querySelector('.preset-download');
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const bg = card.dataset.bg;
+                const text = card.dataset.text;
+                const label = card.querySelector('.preset-label').textContent.toLowerCase().replace(/\s+/g, '-');
+                downloadLogo(bg, text, `ms-teams-pfp-${label}.png`);
+            });
+        });
+
+        document.getElementById('download-custom').addEventListener('click', () => {
+            downloadLogo(circleColorInput.value, letterColorInput.value, 'ms-teams-pfp-custom.png');
+        });
+
+        centerAllLogos();
+    </script>
 </body>
-
-<script>
-    const form = document.querySelector("#initials-form");
-    const letterJ = document.querySelector(".letter.j");
-    const letterG = document.querySelector(".letter.g");
-
-    form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const value = form.elements["initials"].value.trim().toUpperCase();
-
-    if (value.length >= 2) {
-        letterJ.textContent = value[0];
-        letterG.textContent = value[1];
-    }
-        const input = form.elements["initials"];
-        console.log(input.value);
-    });
-</script>
 </html>
