@@ -284,7 +284,10 @@
             ctx.textAlign = 'center';
 
             const text = currentInitials[0] + currentInitials[1];
-            ctx.fillText(text, size / 2, size / 2 + 10);
+            const metrics = ctx.measureText(text);
+            const actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+            const y = size / 2 + (metrics.actualBoundingBoxAscent - actualHeight / 2);
+            ctx.fillText(text, size / 2, y);
 
             canvas.toBlob((blob) => {
                 const url = URL.createObjectURL(blob);
